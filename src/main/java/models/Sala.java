@@ -31,6 +31,7 @@ public class Sala {
 
     /**
      * Constructor que asigna un numero de sala
+     *
      * @param sala
      */
     public Sala(int sala) {
@@ -104,6 +105,7 @@ public class Sala {
 
     /**
      * Aumenta la recaudacion al realizar una compra
+     *
      * @return
      */
     public int increaseRecaudacion() {
@@ -113,6 +115,7 @@ public class Sala {
 
     /**
      * Decrementa la reacudacion de la sala al cancelar una compra. Actualmente no se pueden cancelar compras
+     *
      * @return
      */
     public int decreaseRecaudacion() {
@@ -125,6 +128,7 @@ public class Sala {
 
     /**
      * Comrpueba si una butaca esta libre
+     *
      * @param fila
      * @param columna
      * @return
@@ -136,6 +140,7 @@ public class Sala {
 
     /**
      * Comprueba si una butaca esta reservada
+     *
      * @param fila
      * @param columna
      * @return
@@ -147,6 +152,7 @@ public class Sala {
 
     /**
      * Confirma una butaca reservada pasandola de reservada a ocupada
+     *
      * @param fila
      * @param columna
      * @return
@@ -169,6 +175,7 @@ public class Sala {
 
     /**
      * Libera una butaca reservada
+     *
      * @param fila
      * @param columna
      * @return
@@ -188,6 +195,7 @@ public class Sala {
 
     /**
      * Compra una butaca que este libre
+     *
      * @param fila
      * @param columna
      * @return
@@ -210,6 +218,7 @@ public class Sala {
 
     /**
      * Reserva una butaca libre
+     *
      * @param fila
      * @param columna
      * @return
@@ -235,9 +244,9 @@ public class Sala {
         Attribute rb = Attribute.RED_BACK();
         Attribute bb = Attribute.BLUE_BACK();
         Attribute wt = Attribute.WHITE_TEXT();
-        System.out.print(Ansi.colorize("LIBRE ", wt, gb));
-        System.out.print(Ansi.colorize("OCUPADA ", wt, rb));
-        System.out.print(Ansi.colorize("RESERVADA", wt, bb));
+        System.out.print(Ansi.colorize("LIBRE ", gb));
+        System.out.print(Ansi.colorize("OCUPADA ", rb));
+        System.out.print(Ansi.colorize("RESERVADA \n", bb));
         System.out.println("  1  2  3  4  5  6  7  8  9  ");
         for (int i = 0; i < MAX_FILAS; i++) {
             System.out.print(filas.charAt(i));
@@ -250,7 +259,7 @@ public class Sala {
                     System.out.print(Ansi.colorize("[" + j + "]", bb));
 
             }
-            System.out.println("");
+            System.out.println();
         }
         System.out.println("  1  2  3  4  5  6  7  8  9  ");
     }
@@ -262,8 +271,8 @@ public class Sala {
         printSala();
         System.out.println("Butacas libres: " + getbLibres());
         System.out.println("Butacas reservadas: " + getbReservadas());
-        System.out.println("Butacas ocupadas: "+ getbOcupadas());
+        System.out.println("Butacas ocupadas: " + getbOcupadas());
 
-        System.out.println("Recaudación de la sala: " +getRecaudacion());
+        System.out.println("Recaudación de la sala: " + getRecaudacion());
     }
 }
