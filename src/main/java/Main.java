@@ -1,5 +1,4 @@
-import models.*;
-import utils.*;
+import models.Sala;
 
 import java.util.Scanner;
 
@@ -9,39 +8,53 @@ public class Main {
     public static void main(String[] args) {
         Sala[] sala = new Sala[NUM_SALAS];
         for (int i = 0; i < NUM_SALAS; i++) {
-            sala[i] = new Sala(i+1);
+            sala[i] = new Sala(i + 1);
 
         }
         Scanner sc = new Scanner(System.in);
 
-        int opt = menu();
+
         char fila = ' ';
         int columna = 0;
-        int numSala = 0;
+        int nSala = 0;
+        int opt = 0;
+        do {
+            opt = menu();
+            switch (opt) {
+                case 0:
+                    System.out.println("Hasta luego");
+                    break;
+                case 1:
+                    nSala = getnSala(sala, sc);
+                    sala[nSala - 1].printSala();
+                    break;
+                case 2:
+                    nSala = getnSala(sala, sc);
+                    sala[nSala].printSala();
+                    System.out.println("Selecciona una fila:");
+                    fila = sc.next().charAt(0);
+                    System.out.println("Selecciona un numero de butaca:");
+                    columna = sc.nextInt();
 
-
-        switch (opt) {
-            case 0:
-                System.out.println("Hasta luego");
-                break;
-            case 1:
-                System.out.println("Selecciona numero de sala");
-                int nSala = sc.nextInt();
-                sala[nSala].printSala();
-                break;
-            case 2:
-
-                System.out.println("Selecciona una fila:");
-                fila = sc.next().charAt(0);
-                System.out.println("Selecciona un numero de butaca:");
-                columna = sc.nextInt();
-
-                if (!sala[numSala].reservarButaca(fila, columna))
-                    System.out.println("Butaca ocupada. Cancelando reserva.");
-                break;
-
-
+                    if (!sala[nSala].isLibre(fila, columna))
+                        System.out.println("Butaca ocupada. Cancelando reserva.");
+                    else
+                        sala[nSala] = sala[nSala].reservarButaca(fila, columna);
+                    break;
+            }
         }
+        while (opt != 0);
+
+    }
+
+    private static int getnSala(Sala[] sala, Scanner sc) {
+        System.out.println("Salas disponibles:");
+        for (int i = 0; i < sala.length; i++) {
+            System.out.println("Sala " + (i + 1));
+        }
+        System.out.println("Selecciona numero de sala");
+        int nSala = sc.nextInt();
+        return nSala;
     }
 
     public static int menu() {

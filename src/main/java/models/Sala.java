@@ -1,12 +1,13 @@
 package models;
 
-import models.Butaca;
+import com.diogonunes.jcolor.Ansi;
+import com.diogonunes.jcolor.Attribute;
 import utils.Estado;
 
 public class Sala {
     private final int MAX_FILAS = 5;
     private final int MAX_COLUMNAS = 9;
-    private final String filas = "ABCDEFGHI";
+    private final String filas = "ABCDE";
 
 
     private int recaudacion;
@@ -23,6 +24,12 @@ public class Sala {
         setNumSala(sala);
         recaudacion = 0;
         butacas = new Butaca[MAX_FILAS][MAX_COLUMNAS];
+        for (int i = 0; i < MAX_FILAS; i++) {
+            for (int j = 0; j < MAX_COLUMNAS; j++) {
+                butacas[i][j] = new Butaca(filas.charAt(i), j);
+            }
+
+        }
     }
 
     public int getNumSala() {
@@ -72,20 +79,29 @@ public class Sala {
         return (butacas[filas.indexOf(fila)][columna - 1].getEstado() == Estado.LIBRE);
     }
 
-    public boolean reservarButaca(char fila, int columna) {
+    public Sala reservarButaca(char fila, int columna) {
         if (isLibre(fila, columna)) {
-            butacas[filas.indexOf(fila)][columna -1].setEstado(Estado.RESERVADA);
-            return true;
-        }
-        else
+            butacas[filas.indexOf(fila)][columna - 1].setEstado(Estado.RESERVADA);
+            return this;
+        } else
             System.out.println("Butaca ocupada. Elige otra.");
-        return false;
+        return null;
     }
 
     public void printSala() {
+        Attribute gb = Attribute.GREEN_BACK();
+        Attribute rb = Attribute.RED_BACK();
+        Attribute bb = Attribute.BLUE_BACK();
         for (int i = 0; i < MAX_FILAS; i++) {
+            System.out.print(filas.charAt(i));
             for (int j = 0; j < MAX_COLUMNAS; j++) {
-                System.out.print("[ ] ");
+                if (butacas[i][j].getEstado() == Estado.LIBRE)
+                    System.out.print(Ansi.colorize("["+j+"]", gb));
+                else if(butacas[i][j].getEstado() == Estado.OCUPADA)
+                    System.out.print(Ansi.colorize("["+j+"]", rb));
+                else
+                    System.out.print(Ansi.colorize("["+j+"]", bb));
+
             }
             System.out.println("");
         }
