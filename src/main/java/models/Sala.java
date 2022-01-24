@@ -7,13 +7,18 @@ import utils.Estado;
 public class Sala {
     private final int MAX_FILAS = 5;
     private final int MAX_COLUMNAS = 9;
+    private final int PRECIO_ENTRADA = 6;
     private final String LETRA_FILAS = "ABCDE";
 
 
     private int recaudacion;
+
     private int bOcupadas;
     private int bReservadas;
     private int bLibres;
+
+    private Ticket[] tickets;
+
     private int numSala;
     private Butaca[][] butacas;
 
@@ -27,6 +32,7 @@ public class Sala {
         bLibres = MAX_COLUMNAS * MAX_FILAS;
         bOcupadas = 0;
         bReservadas = 0;
+        tickets = new Ticket[MAX_FILAS * MAX_COLUMNAS];
     }
 
     /**
@@ -47,15 +53,18 @@ public class Sala {
         bLibres = MAX_COLUMNAS * MAX_FILAS;
         bOcupadas = 0;
         bReservadas = 0;
+
+        tickets = new Ticket[MAX_FILAS * MAX_COLUMNAS];
     }
 
     /**
-     *Constructor para salas de tamaño personalizado. Solo usar para testeo
+     * Constructor para salas de tamaño personalizado. Solo usar para testeo
+     *
      * @param sala
      * @param filas
      * @param columnas
      */
-    public Sala(int sala, int filas, int columnas){
+    public Sala(int sala, int filas, int columnas) {
         setNumSala(sala);
         recaudacion = 0;
         butacas = new Butaca[filas][columnas];
@@ -69,6 +78,7 @@ public class Sala {
         bOcupadas = 0;
         bReservadas = 0;
     }
+
     public int getNumSala() {
         return numSala;
     }
@@ -129,7 +139,7 @@ public class Sala {
      * @return
      */
     public int increaseRecaudacion() {
-        setRecaudacion(getRecaudacion() + 6);
+        setRecaudacion(getRecaudacion() + PRECIO_ENTRADA);
         return getRecaudacion();
     }
 
@@ -139,7 +149,7 @@ public class Sala {
      * @return
      */
     public int decreaseRecaudacion() {
-        if (getRecaudacion() >= 6) {
+        if (getRecaudacion() >= PRECIO_ENTRADA) {
             setRecaudacion(getRecaudacion() - 6);
 
             return getRecaudacion();
@@ -170,6 +180,33 @@ public class Sala {
         return (butacas[LETRA_FILAS.indexOf(fila)][columna - 1].getEstado() == Estado.RESERVADA);
     }
 
+
+    public void generarTicket(int nSala, char fila, int columna) {
+        int t = nextTicket();
+        StringBuilder sb = new StringBuilder();
+
+
+
+        tickets[t] = new Ticket(nSala, fila, columna);
+    }
+
+
+    public int nextTicket() {
+        for (int i = 0; i < tickets.length; i++) {
+            if (tickets[i] == null)
+                return i;
+        }
+        return -1;
+    }
+
+    public int buscarTicket(String id){
+        for (int i = 0; i < tickets.length; i++) {
+            if(tickets[i].getId().equals(id))
+                return i;
+        }
+        return -1;
+    }
+
     /**
      * Confirma una butaca reservada pasandola de reservada a ocupada
      *
@@ -177,6 +214,8 @@ public class Sala {
      * @param columna
      * @return
      */
+
+
     public boolean confirmarReserva(char fila, int columna) {
         if (isReservada(fila, columna)) {
             butacas[LETRA_FILAS.indexOf(fila)][columna - 1].setEstado(Estado.OCUPADA);
@@ -184,7 +223,7 @@ public class Sala {
             increaseRecaudacion();
             setbReservadas(bOcupadas + 1);
             setbLibres(bLibres - 1);
-
+            generarTicket(numSala, fila, columna);
             return true;
         } else {
             System.out.println("Butaca no reservada.");
@@ -208,6 +247,8 @@ public class Sala {
             setbLibres(bLibres + 1);
             setbReservadas(bReservadas - 1);
 
+            int t = buscarTicket(""+ numSala + fila + columna);
+            tickets[t] = null;
             return true;
         } else
             return false;
@@ -227,7 +268,7 @@ public class Sala {
             increaseRecaudacion();
             setbOcupadas(bOcupadas + 1);
             setbLibres(bLibres - 1);
-
+            generarTicket(numSala, fila, columna);
             return true;
         } else {
             System.out.println("Butaca no disponible.");
@@ -244,7 +285,7 @@ public class Sala {
      * @return
      */
     public boolean reservarButaca(char fila, int columna) {
-        if (isLibre(fila , columna)) {
+        if (isLibre(fila, columna)) {
             butacas[LETRA_FILAS.indexOf(fila)][columna - 1].setEstado(Estado.RESERVADA);
 
             setbReservadas(bReservadas + 1);
@@ -267,21 +308,16 @@ public class Sala {
         System.out.print(Ansi.colorize("LIBRE ", gb));
         System.out.print(Ansi.colorize("OCUPADA ", rb));
         System.out.print(Ansi.colorize("RESERVADA \n", bb));
-        System.out.println("  1  2  3  4  5  6  7  8  9  ");
+        System.out.println("   1     2     3    4     5     6    7     8     9  ");
         for (int i = 0; i < MAX_FILAS; i++) {
             System.out.print(LETRA_FILAS.charAt(i));
             for (int j = 0; j < MAX_COLUMNAS; j++) {
-                if (butacas[i][j].getEstado() == Estado.LIBRE)
-                    System.out.print(Ansi.colorize("[\uD83C\uDFA5]", gb));
-                else if (butacas[i][j].getEstado() == Estado.OCUPADA)
-                    System.out.print(Ansi.colorize("[  ]", rb));
-                else
-                    System.out.print(Ansi.colorize("[  ]", bb));
+                butacas[i][j].printButaca();
 
             }
             System.out.println();
         }
-        System.out.println("  1  2  3  4  5  6  7  8  9  ");
+        System.out.println("   1     2     3    4     5     6    7     8     9  ");
     }
 
     /**

@@ -1,5 +1,7 @@
 package models;
 
+import com.diogonunes.jcolor.Ansi;
+import com.diogonunes.jcolor.Attribute;
 import utils.Estado;
 
 public class Butaca {
@@ -9,7 +11,7 @@ public class Butaca {
     private int columna;
     private Estado estado;
 
-    public Butaca(char fila, int columna){
+    public Butaca(char fila, int columna) {
         setFila(fila);
         setColumna(columna);
         setEstado(Estado.LIBRE);
@@ -40,5 +42,20 @@ public class Butaca {
         this.estado = estado;
     }
 
-
+    public void printButaca() {
+        switch (getEstado()) {
+            //LIBRE
+            case LIBRE:
+                System.out.print(Ansi.colorize("[ \uD83E\uDE91 ]", Attribute.GREEN_BACK()));
+                break;
+            //RESERVADA
+            case RESERVADA:
+                System.out.print(Ansi.colorize("[   ]", Attribute.BLUE_BACK()));
+                break;
+            //OCUPADA
+            case OCUPADA:
+                System.out.print(Ansi.colorize("[   ]", Attribute.RED_BACK()));
+                break;
+        }
+    }
 }

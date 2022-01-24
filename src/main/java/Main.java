@@ -1,6 +1,6 @@
 import models.Sala;
+import utils.Entrada;
 
-import java.util.Locale;
 import java.util.Scanner;
 
 public class Main {
@@ -21,7 +21,7 @@ public class Main {
         int nSala = 0;
         int opt = 0;
         do {
-            opt = menu();
+            opt = Entrada.menu();
             switch (opt) {
                 //Salir
                 case 0:
@@ -29,16 +29,16 @@ public class Main {
                     break;
                 //mostrar sala
                 case 1:
-                    nSala = getnSala(sala, sc);
+                    nSala = Entrada.getnSala(sala, sc);
                     sala[nSala].printSala();
                     break;
                 //comprar entrada
                 case 2:
-                    nSala = getnSala(sala, sc);
+                    nSala = Entrada.getnSala(sala, sc);
 
                     sala[nSala].printSala();
-                    fila = getFila(sc);
-                    columna = getColumna(sc);
+                    fila = Entrada.getFila(sc);
+                    columna = Entrada.getColumna(sc);
 
                     if (!sala[nSala].isLibre(fila, columna))
                         System.out.println("Butaca ocupada. Cancelando reserva.");
@@ -47,11 +47,11 @@ public class Main {
                     break;
                 //reservar entrada
                 case 3:
-                    nSala = getnSala(sala, sc);
+                    nSala = Entrada.getnSala(sala, sc);
 
                     sala[nSala].printSala();
-                    fila = getFila(sc);
-                    columna = getColumna(sc);
+                    fila = Entrada.getFila(sc);
+                    columna = Entrada.getColumna(sc);
 
                     if (!sala[nSala].isLibre(fila, columna))
                         System.out.println("Butaca ocupada. Cancelando reserva.");
@@ -60,9 +60,9 @@ public class Main {
                     break;
                 //confirmar reserva
                 case 4:
-                    nSala = getnSala(sala, sc);
+                    nSala = Entrada.getnSala(sala, sc);
 
-                    fila = getFila(sc);
+                    fila = Entrada.getFila(sc);
                     System.out.println("Selecciona una columna:");
                     columna = sc.nextInt();
 
@@ -73,9 +73,9 @@ public class Main {
 
                 //cancelar reserva
                 case 5:
-                    nSala = getnSala(sala, sc);
+                    nSala = Entrada.getnSala(sala, sc);
 
-                    fila = getFila(sc);
+                    fila = Entrada.getFila(sc);
                     System.out.println("Selecciona una columna:");
                     columna = sc.nextInt();
 
@@ -85,10 +85,15 @@ public class Main {
                         sala[nSala].liberarButaca(fila, columna);
                     break;
 
-                //Estadisticas de sala
+                //anular compra
                 case 6:
-                    nSala = getnSala(sala, sc);
+                    break;
+                //Estadisticas de sala
+                case 7:
+                    nSala = Entrada.getnSala(sala, sc);
                     sala[nSala].estadisticasSala();
+                    break;
+                default:
                     break;
             }
         }
@@ -96,52 +101,5 @@ public class Main {
 
     }
 
-    private static int getColumna(Scanner sc) {
-        int columna;
-        System.out.println("Selecciona un numero de butaca:");
-        columna = sc.nextInt();
-        return columna;
-    }
 
-    private static char getFila(Scanner sc) {
-        char fila;
-        String f;
-        System.out.println("Selecciona una fila:");
-        f = sc.next().toUpperCase();
-        fila = f.charAt(0);
-        return fila;
-    }
-
-    private static int getnSala(Sala[] sala, Scanner sc) {
-        System.out.println("Salas disponibles:");
-        for (int i = 0; i < sala.length; i++) {
-            System.out.println("Sala " + (i + 1));
-        }
-        System.out.println("Selecciona numero de sala");
-        int nSala = sc.nextInt();
-        return nSala - 1;
-    }
-
-    public static int menu() {
-        int opt = -1;
-        Scanner sc = new Scanner(System.in);
-
-        System.out.println("Elige una opción:");
-        do {
-            System.out.println("0. Salir");
-            System.out.println("1. Ver Sala");
-            System.out.println("2. Comprar entrada");
-            System.out.println("3. Reservar");
-            System.out.println("4. Confirmar Reserva");
-            System.out.println("5. Anular reserva");
-            System.out.println("6. Resumen");
-            try {
-                opt = sc.nextInt();
-            } catch (Exception e) {
-                System.out.println("Introduce una opcion valida (0-6)");
-                sc.next();
-            }
-        } while (opt < 0 || opt > 6);
-        return opt;
-    }
 }

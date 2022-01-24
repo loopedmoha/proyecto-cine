@@ -6,7 +6,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class SalaTest {
     private Sala sala = new Sala(1, 3, 3);
-
+    private int precio = 6;
     @BeforeEach
     void resetSala() {
         sala = new Sala(1, 3, 3);
