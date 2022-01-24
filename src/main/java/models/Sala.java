@@ -7,7 +7,7 @@ import utils.Estado;
 public class Sala {
     private final int MAX_FILAS = 5;
     private final int MAX_COLUMNAS = 9;
-    private final String filas = "ABCDE";
+    private final String LETRA_FILAS = "ABCDE";
 
 
     private int recaudacion;
@@ -40,7 +40,7 @@ public class Sala {
         butacas = new Butaca[MAX_FILAS][MAX_COLUMNAS];
         for (int i = 0; i < MAX_FILAS; i++) {
             for (int j = 0; j < MAX_COLUMNAS; j++) {
-                butacas[i][j] = new Butaca(filas.charAt(i), j);
+                butacas[i][j] = new Butaca(LETRA_FILAS.charAt(i), j);
             }
 
         }
@@ -49,6 +49,26 @@ public class Sala {
         bReservadas = 0;
     }
 
+    /**
+     *Constructor para salas de tamaño personalizado. Solo usar para testeo
+     * @param sala
+     * @param filas
+     * @param columnas
+     */
+    public Sala(int sala, int filas, int columnas){
+        setNumSala(sala);
+        recaudacion = 0;
+        butacas = new Butaca[filas][columnas];
+        for (int i = 0; i < filas; i++) {
+            for (int j = 0; j < columnas; j++) {
+                butacas[i][j] = new Butaca(LETRA_FILAS.charAt(i), j);
+            }
+
+        }
+        bLibres = filas * columnas;
+        bOcupadas = 0;
+        bReservadas = 0;
+    }
     public int getNumSala() {
         return numSala;
     }
@@ -63,7 +83,7 @@ public class Sala {
 
     public Butaca getButacas(char fila, int columna) {
 
-        return butacas[filas.indexOf(fila)][columna];
+        return butacas[LETRA_FILAS.indexOf(fila)][columna];
     }
 
     public void setButacas(Butaca[][] butacas) {
@@ -135,7 +155,7 @@ public class Sala {
      */
     public boolean isLibre(char fila, int columna) {
 
-        return (butacas[filas.indexOf(fila)][columna - 1].getEstado() == Estado.LIBRE);
+        return (butacas[LETRA_FILAS.indexOf(fila)][columna - 1].getEstado() == Estado.LIBRE);
     }
 
     /**
@@ -147,7 +167,7 @@ public class Sala {
      */
     public boolean isReservada(char fila, int columna) {
 
-        return (butacas[filas.indexOf(fila)][columna - 1].getEstado() == Estado.RESERVADA);
+        return (butacas[LETRA_FILAS.indexOf(fila)][columna - 1].getEstado() == Estado.RESERVADA);
     }
 
     /**
@@ -159,7 +179,7 @@ public class Sala {
      */
     public boolean confirmarReserva(char fila, int columna) {
         if (isReservada(fila, columna)) {
-            butacas[filas.indexOf(fila)][columna - 1].setEstado(Estado.OCUPADA);
+            butacas[LETRA_FILAS.indexOf(fila)][columna - 1].setEstado(Estado.OCUPADA);
 
             increaseRecaudacion();
             setbReservadas(bOcupadas + 1);
@@ -182,7 +202,7 @@ public class Sala {
      */
     public boolean liberarButaca(char fila, int columna) {
         if (isReservada(fila, columna)) {
-            butacas[filas.indexOf(fila)][columna - 1].setEstado(Estado.LIBRE);
+            butacas[LETRA_FILAS.indexOf(fila)][columna - 1].setEstado(Estado.LIBRE);
             //decreaseRecaudacion();
 
             setbLibres(bLibres + 1);
@@ -202,7 +222,7 @@ public class Sala {
      */
     public boolean comprarButaca(char fila, int columna) {
         if (isLibre(fila, columna)) {
-            butacas[filas.indexOf(fila)][columna - 1].setEstado(Estado.OCUPADA);
+            butacas[LETRA_FILAS.indexOf(fila)][columna - 1].setEstado(Estado.OCUPADA);
 
             increaseRecaudacion();
             setbOcupadas(bOcupadas + 1);
@@ -225,7 +245,7 @@ public class Sala {
      */
     public boolean reservarButaca(char fila, int columna) {
         if (isLibre(fila , columna)) {
-            butacas[filas.indexOf(fila)][columna - 1].setEstado(Estado.RESERVADA);
+            butacas[LETRA_FILAS.indexOf(fila)][columna - 1].setEstado(Estado.RESERVADA);
 
             setbReservadas(bReservadas + 1);
             setbLibres(bLibres - 1);
@@ -249,7 +269,7 @@ public class Sala {
         System.out.print(Ansi.colorize("RESERVADA \n", bb));
         System.out.println("  1  2  3  4  5  6  7  8  9  ");
         for (int i = 0; i < MAX_FILAS; i++) {
-            System.out.print(filas.charAt(i));
+            System.out.print(LETRA_FILAS.charAt(i));
             for (int j = 0; j < MAX_COLUMNAS; j++) {
                 if (butacas[i][j].getEstado() == Estado.LIBRE)
                     System.out.print(Ansi.colorize("[\uD83C\uDFA5]", gb));
