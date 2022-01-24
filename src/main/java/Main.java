@@ -1,5 +1,6 @@
 import models.Sala;
 
+import java.util.Locale;
 import java.util.Scanner;
 
 public class Main {
@@ -36,10 +37,8 @@ public class Main {
                     nSala = getnSala(sala, sc);
 
                     sala[nSala].printSala();
-                    System.out.println("Selecciona una fila:");
-                    fila = sc.next().charAt(0);
-                    System.out.println("Selecciona un numero de butaca:");
-                    columna = sc.nextInt();
+                    fila = getFila(sc);
+                    columna = getColumna(sc);
 
                     if (!sala[nSala].isLibre(fila, columna))
                         System.out.println("Butaca ocupada. Cancelando reserva.");
@@ -51,10 +50,8 @@ public class Main {
                     nSala = getnSala(sala, sc);
 
                     sala[nSala].printSala();
-                    System.out.println("Selecciona una fila:");
-                    fila = sc.next().charAt(0);
-                    System.out.println("Selecciona un numero de butaca:");
-                    columna = sc.nextInt();
+                    fila = getFila(sc);
+                    columna = getColumna(sc);
 
                     if (!sala[nSala].isLibre(fila, columna))
                         System.out.println("Butaca ocupada. Cancelando reserva.");
@@ -65,8 +62,7 @@ public class Main {
                 case 4:
                     nSala = getnSala(sala, sc);
 
-                    System.out.println("Selecciona una fila:");
-                    fila = sc.next().charAt(0);
+                    fila = getFila(sc);
                     System.out.println("Selecciona una columna:");
                     columna = sc.nextInt();
 
@@ -79,8 +75,7 @@ public class Main {
                 case 5:
                     nSala = getnSala(sala, sc);
 
-                    System.out.println("Selecciona una fila:");
-                    fila = sc.next().charAt(0);
+                    fila = getFila(sc);
                     System.out.println("Selecciona una columna:");
                     columna = sc.nextInt();
 
@@ -99,6 +94,22 @@ public class Main {
         }
         while (opt != 0);
 
+    }
+
+    private static int getColumna(Scanner sc) {
+        int columna;
+        System.out.println("Selecciona un numero de butaca:");
+        columna = sc.nextInt();
+        return columna;
+    }
+
+    private static char getFila(Scanner sc) {
+        char fila;
+        String f;
+        System.out.println("Selecciona una fila:");
+        f = sc.next().toUpperCase();
+        fila = f.charAt(0);
+        return fila;
     }
 
     private static int getnSala(Sala[] sala, Scanner sc) {

@@ -224,7 +224,7 @@ public class Sala {
      * @return
      */
     public boolean reservarButaca(char fila, int columna) {
-        if (isLibre(fila, columna)) {
+        if (isLibre(fila , columna)) {
             butacas[filas.indexOf(fila)][columna - 1].setEstado(Estado.RESERVADA);
 
             setbReservadas(bReservadas + 1);
@@ -252,11 +252,11 @@ public class Sala {
             System.out.print(filas.charAt(i));
             for (int j = 0; j < MAX_COLUMNAS; j++) {
                 if (butacas[i][j].getEstado() == Estado.LIBRE)
-                    System.out.print(Ansi.colorize("[" + j + "]", gb));
+                    System.out.print(Ansi.colorize("[\uD83C\uDFA5]", gb));
                 else if (butacas[i][j].getEstado() == Estado.OCUPADA)
-                    System.out.print(Ansi.colorize("[" + j + "]", rb));
+                    System.out.print(Ansi.colorize("[  ]", rb));
                 else
-                    System.out.print(Ansi.colorize("[" + j + "]", bb));
+                    System.out.print(Ansi.colorize("[  ]", bb));
 
             }
             System.out.println();
