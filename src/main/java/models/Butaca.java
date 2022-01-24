@@ -36,6 +36,7 @@ public class Butaca {
     }
 
     public void setEstado(Estado estado) {
+
         this.estado = estado;
     }
 
