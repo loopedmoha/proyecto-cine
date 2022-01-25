@@ -87,6 +87,14 @@ public class Main {
 
                 //anular compra
                 case 6:
+                    System.out.println("Introduce el ID de tu recibo: ");
+                    String id;
+
+                    do {
+                        id = Entrada.getIdTicket(sc);
+                    }while(id.length() != 3);
+
+
                     break;
                 //Estadisticas de sala
                 case 7:

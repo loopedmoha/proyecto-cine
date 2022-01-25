@@ -70,6 +70,12 @@ public class Entrada {
         return fila;
     }
 
+public static String getIdTicket(Scanner sc){
+        String id;
+        id = sc.next();
+        return id;
+}
+
     public static int getnSala(Sala[] sala, Scanner sc) {
         int nSala = 0;
 
