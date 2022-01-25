@@ -1,7 +1,5 @@
 package models;
 
-import com.diogonunes.jcolor.Ansi;
-import com.diogonunes.jcolor.Attribute;
 import utils.Estado;
 
 public class Sala {
@@ -23,22 +21,9 @@ public class Sala {
     private Butaca[][] butacas;
 
     /**
-     * Constructor vacio
-     */
-    public Sala() {
-        numSala = 0;
-        butacas = new Butaca[MAX_FILAS][MAX_COLUMNAS];
-        recaudacion = 0;
-        bLibres = MAX_COLUMNAS * MAX_FILAS;
-        bOcupadas = 0;
-        bReservadas = 0;
-        tickets = new Ticket[MAX_FILAS * MAX_COLUMNAS];
-    }
-
-    /**
      * Constructor que asigna un numero de sala
      *
-     * @param sala
+     * @param sala sala construida
      */
     public Sala(int sala) {
         setNumSala(sala);
@@ -60,9 +45,9 @@ public class Sala {
     /**
      * Constructor para salas de tamaño personalizado. Solo usar para testeo
      *
-     * @param sala
-     * @param filas
-     * @param columnas
+     * @param sala numero de sala
+     * @param filas numero de filas
+     * @param columnas numero de columnas
      */
     public Sala(int sala, int filas, int columnas) {
         setNumSala(sala);
@@ -136,7 +121,7 @@ public class Sala {
     /**
      * Aumenta la recaudacion al realizar una compra
      *
-     * @return
+     * @return la recaudacion acumulada
      */
     public int increaseRecaudacion() {
         setRecaudacion(getRecaudacion() + PRECIO_ENTRADA);
@@ -146,7 +131,7 @@ public class Sala {
     /**
      * Decrementa la reacudacion de la sala al cancelar una compra. Actualmente no se pueden cancelar compras
      *
-     * @return
+     * @return recaudacion acumulada
      */
     public int decreaseRecaudacion() {
         if (getRecaudacion() >= PRECIO_ENTRADA) {
@@ -159,38 +144,43 @@ public class Sala {
     /**
      * Comrpueba si una butaca esta libre
      *
-     * @param fila
-     * @param columna
-     * @return
+     * @param fila letra de la fila
+     * @param columna columna
+     * @return true si la butaca esta libre
      */
     public boolean isLibre(char fila, int columna) {
 
-        return (butacas[LETRA_FILAS.indexOf(fila)][columna - 1].getEstado() == Estado.LIBRE);
+        return (butacas[LETRA_FILAS.indexOf(fila)][columna].getEstado() == Estado.LIBRE);
     }
 
     /**
      * Comprueba si una butaca esta reservada
      *
-     * @param fila
-     * @param columna
-     * @return
+     * @param fila letra de la fila
+     * @param columna numero de columna
+     * @return true si esta reservada
      */
     public boolean isReservada(char fila, int columna) {
 
-        return (butacas[LETRA_FILAS.indexOf(fila)][columna - 1].getEstado() == Estado.RESERVADA);
+        return (butacas[LETRA_FILAS.indexOf(fila)][columna].getEstado() == Estado.RESERVADA);
     }
 
-
+    /**
+     * Crea un ticket con un ID
+     * @param nSala numero de la sala de la entrada
+     * @param fila fila de la butaca
+     * @param columna numero de la butaca
+     */
     public void generarTicket(int nSala, char fila, int columna) {
         int t = nextTicket();
-        StringBuilder sb = new StringBuilder();
-
-
-
         tickets[t] = new Ticket(nSala, fila, columna);
+        tickets[t].printTicket();
     }
 
-
+    /**
+     * Busca el siguiente ticket vacio
+     * @return posicion del ticket vacio. -1 si no hay hueco
+     */
     public int nextTicket() {
         for (int i = 0; i < tickets.length; i++) {
             if (tickets[i] == null)
@@ -199,30 +189,37 @@ public class Sala {
         return -1;
     }
 
-    public int buscarTicket(String id){
+
+    /**
+     * Busca un ticket asociado a un id
+     * @param id id del ticket (SALA+FILA+COLUMNA)
+     * @return la posicion del ticket buscado. -1 si no existe
+     */
+    public int buscarTicket(String id) {
         for (int i = 0; i < tickets.length; i++) {
-            if(tickets[i].getId().equals(id))
+            if (tickets[i].getId().equals(id))
                 return i;
         }
+        System.out.println("Ticket no encontrado");
         return -1;
     }
 
     /**
      * Confirma una butaca reservada pasandola de reservada a ocupada
      *
-     * @param fila
-     * @param columna
-     * @return
+     * @param fila fila de la butaca
+     * @param columna letra de la butaca
+     * @return true si la reserva se realiza con exito
      */
 
 
     public boolean confirmarReserva(char fila, int columna) {
         if (isReservada(fila, columna)) {
-            butacas[LETRA_FILAS.indexOf(fila)][columna - 1].setEstado(Estado.OCUPADA);
+            butacas[LETRA_FILAS.indexOf(fila)][columna].setEstado(Estado.OCUPADA);
 
             increaseRecaudacion();
-            setbReservadas(bOcupadas + 1);
-            setbLibres(bLibres - 1);
+            setbOcupadas(bOcupadas + 1);
+            setbReservadas(bReservadas - 1);
             generarTicket(numSala, fila, columna);
             return true;
         } else {
@@ -235,35 +232,64 @@ public class Sala {
     /**
      * Libera una butaca reservada
      *
-     * @param fila
-     * @param columna
-     * @return
+     * @param fila    fila de la butaca
+     * @param columna columna de la butaca
+     * @return true si se realiza la liberacion
      */
     public boolean liberarButaca(char fila, int columna) {
         if (isReservada(fila, columna)) {
-            butacas[LETRA_FILAS.indexOf(fila)][columna - 1].setEstado(Estado.LIBRE);
+            butacas[LETRA_FILAS.indexOf(fila)][columna].setEstado(Estado.LIBRE);
             //decreaseRecaudacion();
 
             setbLibres(bLibres + 1);
             setbReservadas(bReservadas - 1);
 
-            int t = buscarTicket(""+ numSala + fila + columna);
-            tickets[t] = null;
             return true;
-        } else
+        } else {
+            System.out.println("Butaca no reservada. No se puede liberar.");
             return false;
+        }
+
+    }
+
+    /**
+     * Anula una compra realizada
+     * @param fila fila de la butaca
+     * @param columna letra de la butaca
+     * @return true si la comrpa se anula con exitop
+     */
+    public boolean anularCompra(char fila, int columna) {
+        if (!isLibre(fila, columna) || !isReservada(fila, columna)) {
+            butacas[LETRA_FILAS.indexOf(fila)][columna].setEstado(Estado.LIBRE);
+            decreaseRecaudacion();
+            setbLibres(bLibres + 1);
+            setbOcupadas(bOcupadas - 1);
+
+            int t = buscarTicket("" + numSala + fila + columna);
+            if (t != -1)
+                tickets[t] = null;
+            else {
+                System.out.println("Ticket no encontrado.");
+                return false;
+            }
+            return true;
+        } else {
+            System.out.println("Butaca no comprada. No se puede cancelar.");
+            return false;
+        }
+
     }
 
     /**
      * Compra una butaca que este libre
      *
-     * @param fila
-     * @param columna
-     * @return
+     * @param fila fila de la butaca
+     * @param columna letra de la butaca
+     * @return true si la compra se realiza con exito
      */
     public boolean comprarButaca(char fila, int columna) {
         if (isLibre(fila, columna)) {
-            butacas[LETRA_FILAS.indexOf(fila)][columna - 1].setEstado(Estado.OCUPADA);
+            butacas[LETRA_FILAS.indexOf(fila)][columna].setEstado(Estado.OCUPADA);
 
             increaseRecaudacion();
             setbOcupadas(bOcupadas + 1);
@@ -280,13 +306,13 @@ public class Sala {
     /**
      * Reserva una butaca libre
      *
-     * @param fila
-     * @param columna
-     * @return
+     * @param fila fila de la butaca
+     * @param columna letra de la butaca
+     * @return true si la reserva se realiza con exito
      */
     public boolean reservarButaca(char fila, int columna) {
         if (isLibre(fila, columna)) {
-            butacas[LETRA_FILAS.indexOf(fila)][columna - 1].setEstado(Estado.RESERVADA);
+            butacas[LETRA_FILAS.indexOf(fila)][columna].setEstado(Estado.RESERVADA);
 
             setbReservadas(bReservadas + 1);
             setbLibres(bLibres - 1);
@@ -301,14 +327,7 @@ public class Sala {
      * Muestra la sala por consola
      */
     public void printSala() {
-        Attribute gb = Attribute.GREEN_BACK();
-        Attribute rb = Attribute.RED_BACK();
-        Attribute bb = Attribute.BLUE_BACK();
-        Attribute wt = Attribute.WHITE_TEXT();
-        System.out.print(Ansi.colorize("LIBRE ", gb));
-        System.out.print(Ansi.colorize("OCUPADA ", rb));
-        System.out.print(Ansi.colorize("RESERVADA \n", bb));
-        System.out.println("   1     2     3    4     5     6    7     8     9  ");
+
         for (int i = 0; i < MAX_FILAS; i++) {
             System.out.print(LETRA_FILAS.charAt(i));
             for (int j = 0; j < MAX_COLUMNAS; j++) {
@@ -317,7 +336,6 @@ public class Sala {
             }
             System.out.println();
         }
-        System.out.println("   1     2     3    4     5     6    7     8     9  ");
     }
 
     /**

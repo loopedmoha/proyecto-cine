@@ -1,4 +1,4 @@
-import models.Sala;
+import models.Cine;
 import utils.Entrada;
 
 import java.util.Scanner;
@@ -8,15 +8,11 @@ public class Main {
     private static final String FILAS = "ABCDE";
 
     public static void main(String[] args) {
-        Sala[] sala = new Sala[NUM_SALAS];
-        for (int i = 0; i < NUM_SALAS; i++) {
-            sala[i] = new Sala(i + 1);
-
-        }
+        Cine cine = new Cine();
         Scanner sc = new Scanner(System.in);
 
 
-        char fila = ' ';
+        char fila;
         int columna = 0;
         int nSala = 0;
         int opt = 0;
@@ -29,77 +25,63 @@ public class Main {
                     break;
                 //mostrar sala
                 case 1:
-                    nSala = Entrada.getnSala(sala, sc);
-                    sala[nSala].printSala();
+                    nSala = Entrada.getnSala(cine.getNSalas(), sc);
+                    cine.printSala(nSala);
                     break;
                 //comprar entrada
                 case 2:
-                    nSala = Entrada.getnSala(sala, sc);
 
-                    sala[nSala].printSala();
+                    nSala = Entrada.getnSala(cine.getNSalas(), sc);
+                    cine.printSala(nSala);
                     fila = Entrada.getFila(sc);
                     columna = Entrada.getColumna(sc);
 
-                    if (!sala[nSala].isLibre(fila, columna))
-                        System.out.println("Butaca ocupada. Cancelando reserva.");
-                    else
-                        sala[nSala].comprarButaca(fila, columna);
+                    cine.comprarEntrada(nSala, fila, columna);
                     break;
                 //reservar entrada
                 case 3:
-                    nSala = Entrada.getnSala(sala, sc);
+                    nSala = Entrada.getnSala(cine.getNSalas(), sc);
+                    cine.printSala(nSala);
 
-                    sala[nSala].printSala();
                     fila = Entrada.getFila(sc);
                     columna = Entrada.getColumna(sc);
 
-                    if (!sala[nSala].isLibre(fila, columna))
-                        System.out.println("Butaca ocupada. Cancelando reserva.");
-                    else
-                        sala[nSala].reservarButaca(fila, columna);
+                    cine.reservarEntrada(nSala, fila, columna);
                     break;
                 //confirmar reserva
                 case 4:
-                    nSala = Entrada.getnSala(sala, sc);
-
+                    nSala = Entrada.getnSala(cine.getNSalas(), sc);
                     fila = Entrada.getFila(sc);
-                    System.out.println("Selecciona una columna:");
-                    columna = sc.nextInt();
+                    columna = Entrada.getColumna(sc);
 
-
-                    sala[nSala].confirmarReserva(fila, columna);
+                    cine.confirmarReserva(nSala, fila, columna);
 
                     break;
 
                 //cancelar reserva
                 case 5:
-                    nSala = Entrada.getnSala(sala, sc);
-
+                    nSala = Entrada.getnSala(cine.getNSalas(), sc);
                     fila = Entrada.getFila(sc);
-                    System.out.println("Selecciona una columna:");
-                    columna = sc.nextInt();
+                    columna = Entrada.getColumna(sc);
 
-                    if (!sala[nSala].isReservada(fila, columna))
-                        System.out.println("Butaca no ocupada.");
-                    else
-                        sala[nSala].liberarButaca(fila, columna);
+                    cine.anularReserva(nSala, fila, columna);
+
                     break;
 
                 //anular compra
                 case 6:
-                    System.out.println("Introduce el ID de tu recibo: ");
-                    String id;
-
+                    String id = "";
                     do {
+                        System.out.println("Introduce el ID de tu recibo: ");
                         id = Entrada.getIdTicket(sc);
-                    }while(id.length() != 3);
+                    } while (id.length() != 3);
 
-
+                    cine.cancelarCompra(id);
                     break;
                 //Estadisticas de sala
                 case 7:
-                    nSala = Entrada.getnSala(sala, sc);
-                    sala[nSala].estadisticasSala();
+                    nSala = Entrada.getnSala(cine.getNSalas(), sc);
+                    cine.estadisticasSala(nSala);
                     break;
                 default:
                     break;

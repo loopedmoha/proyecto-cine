@@ -1,5 +1,8 @@
 package models;
 
+import com.diogonunes.jcolor.Ansi;
+import com.diogonunes.jcolor.Attribute;
+
 import java.util.Date;
 
 public class Ticket {
@@ -34,4 +37,9 @@ public class Ticket {
     }
 
 
+    public void printTicket(){
+        System.out.println("Ticket creado el: " + fecha);
+        System.out.print("ID de ticket: ");
+        System.out.print(Ansi.colorize(id+"\n", Attribute.BOLD(), Attribute.RED_TEXT()));
+    }
 }

@@ -10,7 +10,7 @@ public class Entrada {
     /**
      * Le muestra al usuario un menu y le pide elegir una opcion
      *
-     * @return
+     * @return opcion elegida
      */
     public static int menu() {
         int opt = -1;
@@ -39,22 +39,22 @@ public class Entrada {
     /**
      * Pide por teclado la columna
      *
-     * @param sc
-     * @return
+     * @param sc Scanner de teclado
+     * @return columna elegida
      */
     public static int getColumna(Scanner sc) {
-        int columna = 0;
+        int columna;
         System.out.println("Selecciona un numero de butaca:");
 
         columna = sc.nextInt();
-        return columna;
+        return columna -1;
     }
 
     /**
      * Pide por teclado una fila
      *
-     * @param sc
-     * @return
+     * @param sc Scanner de teclado
+     * @return fila elegida
      */
     public static char getFila(Scanner sc) {
         char fila;
@@ -70,17 +70,17 @@ public class Entrada {
         return fila;
     }
 
-public static String getIdTicket(Scanner sc){
+    public static String getIdTicket(Scanner sc) {
         String id;
         id = sc.next();
-        return id;
-}
+        return id.toUpperCase();
+    }
 
-    public static int getnSala(Sala[] sala, Scanner sc) {
+    public static int getnSala(int salas, Scanner sc) {
         int nSala = 0;
 
         System.out.println("Salas disponibles:");
-        for (int i = 0; i < sala.length; i++) {
+        for (int i = 0; i < salas; i++) {
             System.out.println("Sala " + (i + 1));
         }
         System.out.println("Selecciona numero de sala");
