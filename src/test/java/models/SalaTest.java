@@ -1,3 +1,5 @@
+package models;
+
 import models.Sala;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -5,11 +7,11 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 class SalaTest {
-    private Sala sala = new Sala(1, 3, 3);
+    private Sala sala = new Sala(1);
     private int precio = 6;
     @BeforeEach
     void resetSala() {
-        sala = new Sala(1, 3, 3);
+        sala = new Sala(1);
     }
 
     @Test
@@ -58,7 +60,7 @@ class SalaTest {
 
     @Test
     void getbLibres() {
-        assertEquals(9, sala.getbLibres());
+        assertEquals(45, sala.getbLibres());
     }
 
     @Test

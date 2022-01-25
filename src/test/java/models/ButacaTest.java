@@ -1,3 +1,5 @@
+package models;
+
 import models.Butaca;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

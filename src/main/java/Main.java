@@ -8,7 +8,8 @@ public class Main {
     private static final String FILAS = "ABCDE";
 
     public static void main(String[] args) {
-        Cine cine = new Cine();
+        int salas = 5;
+        Cine cine = new Cine(salas);
         Scanner sc = new Scanner(System.in);
 
 

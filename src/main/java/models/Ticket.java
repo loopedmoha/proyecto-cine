@@ -5,7 +5,7 @@ import com.diogonunes.jcolor.Attribute;
 
 import java.util.Date;
 
-public class Ticket {
+public class Ticket extends Butaca {
     private Date fecha;
 
     //id = nSala+Fila+columna?

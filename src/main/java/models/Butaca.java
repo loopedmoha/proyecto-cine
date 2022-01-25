@@ -4,13 +4,19 @@ import com.diogonunes.jcolor.Ansi;
 import com.diogonunes.jcolor.Attribute;
 import utils.Estado;
 
-public class Butaca {
+public class Butaca extends Sala {
     private final String filas = "ABCDEFGHI";
 
     private char fila;
     private int columna;
     private Estado estado;
 
+
+    public Butaca(){
+        fila = ' ';
+        columna = 0;
+        estado = Estado.LIBRE;
+    }
     public Butaca(char fila, int columna) {
         setFila(fila);
         setColumna(columna);

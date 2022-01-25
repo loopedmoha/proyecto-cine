@@ -3,7 +3,7 @@ package models;
 import com.diogonunes.jcolor.Ansi;
 import com.diogonunes.jcolor.Attribute;
 
-public class Cine {
+public class Cine extends Sala {
     private final int NUM_SALAS = 3;
     private final String FILAS = "ABCDE";
     private final int MAX_COLUMNAS = 9;
@@ -15,9 +15,9 @@ public class Cine {
     /**
      * Constructor de cine
      */
-    public Cine() {
-        salas = new Sala[NUM_SALAS];
-        for (int i = 0; i < NUM_SALAS; i++) {
+    public Cine(int numSalas) {
+        salas = new Sala[numSalas];
+        for (int i = 0; i < numSalas; i++) {
             salas[i] = new Sala(i+1);
         }
     }
@@ -59,10 +59,10 @@ public class Cine {
      * Comprueba que la entrada es correcta para la fila
      *
      * @param fila letra de fila
-     * @return booelan
+     * @return true si la fila esta bien
      */
     public boolean isFilaOK(char fila) {
-        return (FILAS.indexOf(fila) == -1);
+        return (FILAS.indexOf(fila) != -1);
     }
 
     /**
@@ -85,7 +85,7 @@ public class Cine {
      * @return true si la reserva se realiza con exito
      */
     public boolean reservarEntrada(int sala, char fila, int columna) {
-        if (checkData(sala, fila, columna)) return false;
+        if (!checkData(sala, fila, columna)) return false;
 
         return salas[sala].reservarButaca(fila, columna);
     }
@@ -100,7 +100,7 @@ public class Cine {
      * @return true si la compra se realiza con exito
      */
     public boolean comprarEntrada(int sala, char fila, int columna) {
-        if (checkData(sala, fila, columna)) return false;
+        if (!checkData(sala, fila, columna)) return false;
         return salas[sala].comprarButaca(fila, columna);
     }
 
@@ -114,13 +114,13 @@ public class Cine {
      * @return true si la confirmacion se realiza con exito
      */
     public boolean confirmarReserva(int sala, char fila, int columna) {
-        if (checkData(sala, fila, columna)) return false;
+        if (!checkData(sala, fila, columna)) return false;
 
         return salas[sala].confirmarReserva(fila, columna);
     }
 
     public boolean anularReserva(int sala, char fila, int columna){
-        if (checkData(sala, fila, columna)) return false;
+        if (!checkData(sala, fila, columna)) return false;
 
         return salas[sala].liberarButaca(fila, columna);
     }
@@ -132,23 +132,31 @@ public class Cine {
      */
     public boolean cancelarCompra(String id) {
         int nSala = id.charAt(0) - 49;
-
+        char fila = id.charAt(1);
+        int columna = id.charAt(2)-49;
+        if(!checkData(nSala, fila, columna)) return false;
         return salas[nSala].anularCompra(id.charAt(1), id.charAt(2)-48);
     }
 
-
+    /**
+     * Comprueba la validez de sala, fila y columna
+     * @param sala numero sala
+     * @param fila letra columna
+     * @param columna numero columna
+     * @return true si los datos estan bien
+     */
     private boolean checkData(int sala, char fila, int columna) {
         if (!isSalaOK(sala)) {
             System.out.println("Numero de sala no valido.");
-            return true;
-        } else if (isFilaOK(fila)) {
+            return false;
+        } else if (!isFilaOK(fila)) {
             System.out.println("Fila incorrecta.");
-            return true;
+            return false;
         } else if (!isColumnaOK(columna)) {
             System.out.println("Columna incorrecta.");
-            return true;
+            return false;
         }
-        return false;
+        return true;
     }
 
     public void printSala(int sala) {

@@ -20,6 +20,17 @@ public class Sala {
     private int numSala;
     private Butaca[][] butacas;
 
+
+    public Sala() {
+        recaudacion = 0;
+        bOcupadas = 0;
+        bReservadas = 0;
+        bLibres = MAX_FILAS * MAX_COLUMNAS;
+        numSala = 0;
+        tickets = new Ticket[MAX_FILAS * MAX_COLUMNAS];
+        butacas = new Butaca[MAX_FILAS][MAX_COLUMNAS];
+    }
+
     /**
      * Constructor que asigna un numero de sala
      *
@@ -42,27 +53,7 @@ public class Sala {
         tickets = new Ticket[MAX_FILAS * MAX_COLUMNAS];
     }
 
-    /**
-     * Constructor para salas de tamaño personalizado. Solo usar para testeo
-     *
-     * @param sala numero de sala
-     * @param filas numero de filas
-     * @param columnas numero de columnas
-     */
-    public Sala(int sala, int filas, int columnas) {
-        setNumSala(sala);
-        recaudacion = 0;
-        butacas = new Butaca[filas][columnas];
-        for (int i = 0; i < filas; i++) {
-            for (int j = 0; j < columnas; j++) {
-                butacas[i][j] = new Butaca(LETRA_FILAS.charAt(i), j);
-            }
 
-        }
-        bLibres = filas * columnas;
-        bOcupadas = 0;
-        bReservadas = 0;
-    }
 
     public int getNumSala() {
         return numSala;
@@ -144,7 +135,7 @@ public class Sala {
     /**
      * Comrpueba si una butaca esta libre
      *
-     * @param fila letra de la fila
+     * @param fila    letra de la fila
      * @param columna columna
      * @return true si la butaca esta libre
      */
@@ -156,7 +147,7 @@ public class Sala {
     /**
      * Comprueba si una butaca esta reservada
      *
-     * @param fila letra de la fila
+     * @param fila    letra de la fila
      * @param columna numero de columna
      * @return true si esta reservada
      */
@@ -167,8 +158,9 @@ public class Sala {
 
     /**
      * Crea un ticket con un ID
-     * @param nSala numero de la sala de la entrada
-     * @param fila fila de la butaca
+     *
+     * @param nSala   numero de la sala de la entrada
+     * @param fila    fila de la butaca
      * @param columna numero de la butaca
      */
     public void generarTicket(int nSala, char fila, int columna) {
@@ -179,6 +171,7 @@ public class Sala {
 
     /**
      * Busca el siguiente ticket vacio
+     *
      * @return posicion del ticket vacio. -1 si no hay hueco
      */
     public int nextTicket() {
@@ -192,6 +185,7 @@ public class Sala {
 
     /**
      * Busca un ticket asociado a un id
+     *
      * @param id id del ticket (SALA+FILA+COLUMNA)
      * @return la posicion del ticket buscado. -1 si no existe
      */
@@ -207,7 +201,7 @@ public class Sala {
     /**
      * Confirma una butaca reservada pasandola de reservada a ocupada
      *
-     * @param fila fila de la butaca
+     * @param fila    fila de la butaca
      * @param columna letra de la butaca
      * @return true si la reserva se realiza con exito
      */
@@ -254,7 +248,8 @@ public class Sala {
 
     /**
      * Anula una compra realizada
-     * @param fila fila de la butaca
+     *
+     * @param fila    fila de la butaca
      * @param columna letra de la butaca
      * @return true si la comrpa se anula con exitop
      */
@@ -283,7 +278,7 @@ public class Sala {
     /**
      * Compra una butaca que este libre
      *
-     * @param fila fila de la butaca
+     * @param fila    fila de la butaca
      * @param columna letra de la butaca
      * @return true si la compra se realiza con exito
      */
@@ -306,7 +301,7 @@ public class Sala {
     /**
      * Reserva una butaca libre
      *
-     * @param fila fila de la butaca
+     * @param fila    fila de la butaca
      * @param columna letra de la butaca
      * @return true si la reserva se realiza con exito
      */
