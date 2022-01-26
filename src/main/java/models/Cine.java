@@ -177,6 +177,6 @@ public class Cine extends Sala {
     }
 
     public void ordenarTickets(int i) {
-        salas[i].ordenarTickets();
+        salas[i].ticketSort();
     }
 }

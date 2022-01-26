@@ -2,8 +2,6 @@ package models;
 
 import utils.Estado;
 
-import java.util.Collection;
-
 public class Sala {
     private final int MAX_FILAS = 5;
     private final int MAX_COLUMNAS = 9;
@@ -275,16 +273,22 @@ public class Sala {
         }
 
     }
+//TODO Arreglar ordenacion (probar con burbuja)
+    public void ticketSort() {
+        Ticket tmp = null;
 
-    public void ordenarTickets() {
-        Ticket aux;
-        for (int i = 0; i < tickets.length; i++) {
+        for (int i = 1; i < tickets.length; i++) {
+            if (tickets[i] != null) {
+                tmp = tickets[i];
+                int j = i - 1;
+                //cambiar esta condicion para hacerlo asc o desc
 
-            int j = i - 1;
-            aux = tickets[i];
-            while (j >= 0 && Integer.parseInt(tickets[j].getFechaString()) > Integer.parseInt(aux.getFechaString()))
-                if (tickets[i] != null)
-                    System.out.println(tickets[i].getFechaString());
+                    while ((j >= 0 && tickets[j] != null) && Ticket.compareTicket(tickets[j], tmp) == -1) {
+                        tickets[j + 1] = tickets[j];
+                        j--;
+                    }
+                tickets[j + 1] = tmp;
+            }
         }
     }
 
