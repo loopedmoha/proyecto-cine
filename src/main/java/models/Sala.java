@@ -2,6 +2,8 @@ package models;
 
 import utils.Estado;
 
+import java.util.Collection;
+
 public class Sala {
     private final int MAX_FILAS = 5;
     private final int MAX_COLUMNAS = 9;
@@ -52,7 +54,6 @@ public class Sala {
 
         tickets = new Ticket[MAX_FILAS * MAX_COLUMNAS];
     }
-
 
 
     public int getNumSala() {
@@ -273,6 +274,18 @@ public class Sala {
             return false;
         }
 
+    }
+
+    public void ordenarTickets() {
+        Ticket aux;
+        for (int i = 0; i < tickets.length; i++) {
+
+            int j = i - 1;
+            aux = tickets[i];
+            while (j >= 0 && Integer.parseInt(tickets[j].getFechaString()) > Integer.parseInt(aux.getFechaString()))
+                if (tickets[i] != null)
+                    System.out.println(tickets[i].getFechaString());
+        }
     }
 
     /**

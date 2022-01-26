@@ -7,7 +7,7 @@ public class Main {
     private static final int NUM_SALAS = 3;
     private static final String FILAS = "ABCDE";
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException {
         int salas = 5;
         Cine cine = new Cine(salas);
         Scanner sc = new Scanner(System.in);
@@ -17,6 +17,22 @@ public class Main {
         int columna = 0;
         int nSala = 0;
         int opt = 0;
+
+        /*
+        PRUEBA
+         */
+        cine.comprarEntrada(1, 'A', 4);
+
+        Thread.sleep(5000);
+        cine.comprarEntrada(1, 'B', 2);
+        Thread.sleep(5000);
+        cine.comprarEntrada(1, 'C', 5);
+
+
+        cine.ordenarTickets(1);
+
+
+        /*                */
         do {
             opt = Entrada.menu();
             switch (opt) {

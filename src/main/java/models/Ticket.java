@@ -3,6 +3,8 @@ package models;
 import com.diogonunes.jcolor.Ansi;
 import com.diogonunes.jcolor.Attribute;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class Ticket extends Butaca {
@@ -36,6 +38,10 @@ public class Ticket extends Butaca {
         this.id = id;
     }
 
+    public String getFechaString(){
+        DateFormat df = new SimpleDateFormat("yyyyMMddHHmmss");
+        return df.format(getFecha());
+    }
 
     public void printTicket(){
         System.out.println("Ticket creado el: " + fecha);

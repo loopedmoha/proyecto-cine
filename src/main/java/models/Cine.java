@@ -175,4 +175,8 @@ public class Cine extends Sala {
     public void estadisticasSala(int nSala) {
         salas[nSala].estadisticasSala();
     }
+
+    public void ordenarTickets(int i) {
+        salas[i].ordenarTickets();
+    }
 }
