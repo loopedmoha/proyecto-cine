@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="models.CineTest" tests="8" skipped="0" failures="0" errors="0" timestamp="2022-01-25T12:23:53" hostname="MacBook-Air-de-Mohamed.local" time="0.086">
+  <properties/>
+  <testcase name="reservarEntrada()" classname="models.CineTest" time="0.03"/>
+  <testcase name="isColumnaOK()" classname="models.CineTest" time="0.002"/>
+  <testcase name="confirmarReserva()" classname="models.CineTest" time="0.028"/>
+  <testcase name="isFilaOK()" classname="models.CineTest" time="0.002"/>
+  <testcase name="anularReserva()" classname="models.CineTest" time="0.003"/>
+  <testcase name="cancelarCompra()" classname="models.CineTest" time="0.004"/>
+  <testcase name="isSalaOK()" classname="models.CineTest" time="0.006"/>
+  <testcase name="comprarEntrada()" classname="models.CineTest" time="0.001"/>
+  <system-out><![CDATA[Numero de sala no valido.
+Fila incorrecta.
+Columna incorrecta.
+Ticket creado el: Tue Jan 25 13:23:53 CET 2022
+ID de ticket: ?[1;31m2A2?[0m
+?[1;31m?[0mNumero de sala no valido.
+Fila incorrecta.
+Columna incorrecta.
+Numero de sala no valido.
+Fila incorrecta.
+Columna incorrecta.
+Ticket creado el: Tue Jan 25 13:23:53 CET 2022
+ID de ticket: ?[1;31m1A2?[0m
+?[1;31m?[0mNumero de sala no valido.
+Ticket creado el: Tue Jan 25 13:23:53 CET 2022
+ID de ticket: ?[1;31m2A2?[0m
+?[1;31m?[0mNumero de sala no valido.
+Fila incorrecta.
+Columna incorrecta.
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
