@@ -18,26 +18,7 @@ public class Main {
         int nSala = 0;
         int opt = 0;
 
-        /*
-        PRUEBA
-         */
-        cine.comprarEntrada(1, 'A', 4);
 
-        Thread.sleep(5000);
-        cine.comprarEntrada(1, 'B', 2);
-        Thread.sleep(5000);
-        cine.comprarEntrada(1, 'C', 5);
-        Thread.sleep(5000);
-        cine.comprarEntrada(1, 'A', 5);
-
-        Thread.sleep(5000);
-        cine.comprarEntrada(1, 'B', 5);
-        cine.cancelarCompra("2B2");
-        cine.ordenarTickets(1);
-
-
-
-        /*                */
         do {
             opt = Entrada.menu();
             switch (opt) {
