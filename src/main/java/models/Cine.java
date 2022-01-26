@@ -3,7 +3,7 @@ package models;
 import com.diogonunes.jcolor.Ansi;
 import com.diogonunes.jcolor.Attribute;
 
-public class Cine extends Sala {
+public class Cine {
     private final int NUM_SALAS = 3;
     private final String FILAS = "ABCDE";
     private final int MAX_COLUMNAS = 9;

@@ -4,7 +4,7 @@ import com.diogonunes.jcolor.Ansi;
 import com.diogonunes.jcolor.Attribute;
 import utils.Estado;
 
-public class Butaca extends Sala {
+public class Butaca {
     private final String filas = "ABCDEFGHI";
 
     private char fila;
