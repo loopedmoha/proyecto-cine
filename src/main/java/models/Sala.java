@@ -276,22 +276,35 @@ public class Sala {
 //TODO Arreglar ordenacion (probar con burbuja)
     public void ticketSort() {
         Ticket tmp = null;
+        compactarTickets();
+        int size = ticketsSize();
 
+        //cambiar este if para hacerlo ascendente o descendente
+        for (int i = 1; i < size; i++)
+            for (int j = size - 1; j >= i; j--)
+                if (Ticket.compareTicket(tickets[j], tickets[j - 1])==-1) {
+                    tmp = tickets[j];
+                    tickets[j] = tickets[j - 1];
+                    tickets[j - 1] = tmp;
+                }
+    }
+
+    private int ticketsSize(){
+        int size = 0;
+        for (int i = 0; i < tickets.length; i++) {
+            if(tickets[i] != null) size++;
+        }
+        return size;
+    }
+    private void compactarTickets(){
+        Ticket tmp = null;
         for (int i = 1; i < tickets.length; i++) {
-            if (tickets[i] != null) {
-                tmp = tickets[i];
-                int j = i - 1;
-                //cambiar esta condicion para hacerlo asc o desc
-
-                    while ((j >= 0 && tickets[j] != null) && Ticket.compareTicket(tickets[j], tmp) == -1) {
-                        tickets[j + 1] = tickets[j];
-                        j--;
-                    }
-                tickets[j + 1] = tmp;
+            if(tickets[i] != null && tickets[i-1] == null) {
+                tickets[i - 1] = tickets[i];
+            tickets[i] = null;
             }
         }
     }
-
     /**
      * Compra una butaca que este libre
      *
